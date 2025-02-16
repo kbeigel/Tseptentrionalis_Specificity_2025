@@ -1,0 +1,235 @@
+---
+title: "Analysis of Trachymyrmex septentrionalis specificiity"
+author: K. Beigel
+date: `r Sys.Date()`
+---
+
+# Set up using `renv`
+```{r}
+# Set up 
+renv::restore()
+```
+
+# Install `coevo` package using `devtools::install_github()`
+```{r}
+devtools::install_github('kbeigel/coevo@v1.0.0', force = TRUE)
+library(coevo)
+```
+
+# Analysis for cophylogenetic signal (host: ants, symbiont: fungus)
+```{r}
+analysis_name = 'antHost_fungusSymbiont'
+```
+
+## Read in host-symbiont association matrix (rows: ants, columns: fungus)
+```{r}
+hs_assoc = read_associations('data/ant-fungus_matrix.tsv')
+```
+
+## Read in host and symbiont trees, filtering to keep taxa in the association matrix
+```{r}
+# Ant phylo
+ants = read_phylo(
+    filepath = 'data/Trachymyrmex_septentrionalis_GBS-SNP_Beigel2025.nexus',
+    nexus_format = 'raxml', 
+    taxa_to_keep = hs_assoc$host_taxa,
+    label_fix = c('JS_', '')
+)
+
+# Fungus phylo
+fungus = read_phylo(
+    filepath = 'data/Leucocoprinus_sp_Sanger-ITS_Luiso2020.nexus',
+    nexus_format = 'raxml', 
+    taxa_to_keep = hs_assoc$symbiont_taxa,
+    label_fix = c('\\.', '')
+)
+```
+___
+
+## Run ParaFit
+```{r}
+parafit_results = parafit_analysis(
+    host_tree = ants,
+    symbiont_tree = fungus,
+    assoc_mat = hs_assoc,
+    n_runs = 100,
+    correction_method = 'lingoes'
+)
+```
+
+## Run PACo
+```{r}
+paco_results = paco_analysis(
+    host_tree = ants,
+    symbiont_tree = fungus,
+    assoc_mat = hs_assoc,
+    n_perm = 100000
+)
+```
+
+## Compile the results from ParaFit and PACo
+```{r}
+
+# Get a table of the global results for ParaFit and PACo
+global_results = compile_global_results(
+    parafit_results, paco_results
+)
+
+# Get a table of the link results
+link_results = compile_link_results(
+    parafit_results,
+    paco_results,
+    p_alpha = 0.05
+)
+
+# Write results to file
+dir.create('results/tables/', showWarnings = FALSE, recursive = FALSE)
+write.table(global_results, paste0('results/tables/', analysis_name, '_coevo_global_results.txt'), sep = '\t', quote = FALSE, row.names = FALSE)
+write.table(link_results, paste0('results/tables/', analysis_name, '_coevo_link_results.txt'), sep = '\t', quote = FALSE, row.names = FALSE)
+```
+
+## Plotting the cophylo
+```{r}
+# Create cophylogeny and write to file
+dir.create('results/figures/', showWarnings = FALSE, recursive = FALSE)
+
+# Plot cophylogeny
+plot_cophylo(
+    h_phy = ants,
+    s_phy = fungus,
+    results = link_results,
+    filename = paste0('results/figures/', analysis_name, '_coevo_cophylo'),
+    plot_h = 10, 
+    plot_w = 14,
+    palette = c('gold', 'magenta3', 'cyan3')
+)
+```
+
+___
+
+# Analysis for cophylogenetic signal (host: fungus, symbiont: ants)
+
+```{r}
+analysis_name = 'fungusHost_antSymbiont'
+```
+
+## Read in host-symbiont association matrix (rows: fungus, columns: ants)
+```{r}
+hs_assoc = read_associations('data/fungus-ant_matrix.tsv')
+```
+
+## Read in host and symbiont trees, filtering to keep taxa in the association matrix
+```{r}
+# Ant phylo
+ants = read_phylo(
+    filepath = 'data/Trachymyrmex_septentrionalis_GBS-SNP_Beigel2025.nexus',
+    nexus_format = 'raxml', 
+    taxa_to_keep = hs_assoc$symbiont_taxa,
+    label_fix = c('JS_', '')
+)
+
+# Fungus phylo
+fungus = read_phylo(
+    filepath = 'data/Leucocoprinus_sp_Sanger-ITS_Luiso2020.nexus',
+    nexus_format = 'raxml', 
+    taxa_to_keep = hs_assoc$host_taxa,
+    label_fix = c('\\.', '')
+)
+```
+
+## Run ParaFit
+```{r}
+parafit_results = parafit_analysis(
+    host_tree = fungus,
+    symbiont_tree = ants,
+    assoc_mat = hs_assoc,
+    n_runs = 100,
+    correction_method = 'lingoes'
+)
+```
+
+## Run PACo
+```{r}
+paco_results = paco_analysis(
+    host_tree = fungus,
+    symbiont_tree = ants,
+    assoc_mat = hs_assoc,
+    n_perm = 100000
+)
+```
+
+## Compile the results from ParaFit and PACo
+```{r}
+# Get a table of the global results for ParaFit and PACo
+global_results = compile_global_results(
+    parafit_results, paco_results
+)
+
+# Get a table of the link results
+link_results = compile_link_results(
+    parafit_results,
+    paco_results,
+    p_alpha = 0.05
+)
+
+# Write results to file
+dir.create('results/tables/', showWarnings = FALSE, recursive = FALSE)
+write.table(global_results, paste0('results/tables/', analysis_name, '_coevo_global_results.txt'), sep = '\t', quote = FALSE, row.names = FALSE)
+write.table(link_results, paste0('results/tables/', analysis_name, '_coevo_link_results.txt'), sep = '\t', quote = FALSE, row.names = FALSE)
+```
+
+## Plotting the cophylo
+```{r}
+# Create cophylogeny and write to file
+dir.create('results/figures/', showWarnings = FALSE, recursive = FALSE)
+
+# Plot cophylogeny
+plot_cophylo(
+    h_phy = fungus,
+    s_phy = ants,
+    results = link_results,
+    filename = paste0('results/figures/', analysis_name, '_coevo_cophylo'),
+    plot_h = 10, 
+    plot_w = 14,
+    palette = c('gold', 'magenta3', 'cyan3')
+)
+```
+
+___
+
+# Comparing results
+```{r}
+
+fh_as_global = read.table(paste0('results/tables/', 'fungusHost_antSymbiont', '_coevo_global_results.txt'), sep = '\t', header = TRUE)
+fh_as_links = read.table(paste0('results/tables/', 'fungusHost_antSymbiont', '_coevo_link_results.txt'), sep = '\t', header = TRUE)
+
+ah_fs_global = read.table(paste0('results/tables/', 'antHost_fungusSymbiont', '_coevo_global_results.txt'), sep = '\t', header = TRUE)
+ah_fs_links = read.table(paste0('results/tables/', 'antHost_fungusSymbiont', '_coevo_link_results.txt'), sep = '\t', header = TRUE)
+
+# We can also look at the ParaFit "fungusHost_antSymbiont" and PACo "antHost_fungusSymbiont"
+# to see what overlaps between these analyses
+res_combo = cbind(fh_as_links[, c(1:6, 9:10)], ah_fs_links[, c(7, 8, 11)])
+plot_cophylo(
+    h_phy = fungus,
+    s_phy = ants,
+    results = res_combo,
+    filename = paste0('results/figures/', 'CombinedRes_PACoAntHost_ParaFitFungusHost', '_coevo_cophylo'),
+    plot_h = 10, 
+    plot_w = 14,
+    palette = c('gold', 'magenta3', 'cyan3')
+)
+
+# We can also look at the ParaFit "antHost_antSymbiont" and PACo "fungusHost_antSymbiont"
+# to see what overlaps between these analyses
+res_combo = cbind(ah_fs_links[, c(1:6, 9:10)], fh_as_links[, c(7, 8, 11)])
+plot_cophylo(
+    h_phy = fungus,
+    s_phy = ants,
+    results = res_combo,
+    filename = paste0('results/figures/', 'CombinedRes_PACoFungusHost_ParaFitAntHost', '_coevo_cophylo'),
+    plot_h = 10, 
+    plot_w = 14,
+    palette = c('gold', 'magenta3', 'cyan3')
+)
+
+```
