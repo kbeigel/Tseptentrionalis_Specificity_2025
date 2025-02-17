@@ -16,6 +16,10 @@ devtools::install_github('kbeigel/coevo@v1.0.0', force = TRUE)
 library(coevo)
 ```
 
+```{r}
+set.seed(42)
+```
+
 # Analysis for cophylogenetic signal (host: ants, symbiont: fungus)
 ```{r}
 analysis_name = 'antHost_fungusSymbiont'
