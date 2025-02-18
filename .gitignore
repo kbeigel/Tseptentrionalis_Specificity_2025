@@ -1,0 +1,5 @@
+ascbias.py
+output/raxml/RAxML_result.*
+output/raxml/RAxML_log.*
+output/raxml/RAxML_parsimonyTree.*
+output/raxml/RAxML_info.*
