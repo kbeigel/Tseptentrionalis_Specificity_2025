@@ -1,0 +1,3 @@
+Analysis	Metric	Value	P_Value_Metric	P_Value	N_permutations	N_runs
+ParaFit	ParaFit_Global_Fit	0.00377648284584014	ParaFit_Global_Mean_Pvalue	0.00465	999	100
+PACo	PACo_Observed_m2	0.0301682770638515	PACo_Pvalue	0.00171	1e+05	1
