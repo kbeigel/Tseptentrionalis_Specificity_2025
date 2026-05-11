@@ -88,9 +88,9 @@ The nucleotides of the *T. septentrionalis* reference sequence were extracted fr
 
 ### 2. Evaluating cophylogenetic signal between *T. septentrionalis* and *Leucocoprinus sp.*
 
-The input files here can be used to run tests of cophylogenetic signal. Code and methods are available here: [github.com/kbeigel/Tseptentrionalis_Specificity_2025](https://github.com/kbeigel/Tseptentrionalis_Specificity_2025)
+The input files here can be used to run tests of cophylogenetic signal. Code and methods are available here in the GitHub respotory for this project: [github.com/kbeigel/Tseptentrionalis_Specificity_2025](https://github.com/kbeigel/Tseptentrionalis_Specificity_2025). The project repository contains a `renv.lock` file (for using the [renv](https://rstudio.github.io/renv/articles/renv.html) environment management package) that contains information on all packages and versions used in R for analysis.
 
-See `Tsept_CophylogeneticSignal_coevo/Tsept_NonReciprocalCoevo_2025.Rmd` for methods of running tests of cophylogenetic signal. This analysis was performed using the mini-package available at [github.com/kbeigel/coevo](https://github.com/kbeigel/coevo)  (v1.0.0). This repo also contains a `renv.lock` file that contains information on all packages and versions used in R for analysis.
+See `Tsept_CophylogeneticSignal_coevo/Tsept_NonReciprocalCoevo_2025.Rmd` for methods of running tests of cophylogenetic signal. This analysis was performed using the mini-package available at [github.com/kbeigel/coevo](https://github.com/kbeigel/coevo)  (v1.0.0).
 
 #### Description:
 
