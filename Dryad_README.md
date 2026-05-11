@@ -64,7 +64,7 @@ The file shows the significant links determined by ParaFit and PACo. This data i
 
 #### File: `CombinedRes_ParaFit-FH-AS_PACo-AH-FS_coevo_global_results.txt`
 
-**Description:** See `Tsept_CophylogeneticSignal_coevo/Tsept_NonReciprocalCoevo_2025.Rmd` for methods of running tests of cophylogenetic signal. This analysis was performed using the mini-package available at [github.com/kbeigel/coevo](https://github.com/kbeigel/coevo); see vignette/example for explanation of columns in table.
+**Description:** See `copyhlogenetic_signal/Tsept_NonReciprocalCoevo_2025.Rmd` for methods of running tests of cophylogenetic signal. This analysis was performed using the mini-package available at [github.com/kbeigel/coevo](https://github.com/kbeigel/coevo); see vignette/example for explanation of columns in table.
 
 ---
 
@@ -78,7 +78,7 @@ Informatics were performed by SNPsaurus. Demultiplexed reads were trimmed using 
 
 Code and methods are available here: [github.com/kbeigel/Tseptentrionalis_Specificity_2025](https://github.com/kbeigel/Tseptentrionalis_Specificity_2025)
 
-See `Tsept_PhylogeneticTree_RAxML/Tsept_PhylogeneticTree_RAxML.md` for methods for running RAxML.
+See `phylogenetic_analysis/Tsept_PhylogeneticTree_RAxML.md` for methods for running RAxML.
 
 #### Description:
 
@@ -90,7 +90,7 @@ The nucleotides of the *T. septentrionalis* reference sequence were extracted fr
 
 The input files here can be used to run tests of cophylogenetic signal. Code and methods are available here in the GitHub respotory for this project: [github.com/kbeigel/Tseptentrionalis_Specificity_2025](https://github.com/kbeigel/Tseptentrionalis_Specificity_2025). The project repository contains a `renv.lock` file (for using the [renv](https://rstudio.github.io/renv/articles/renv.html) environment management package) that contains information on all packages and versions used in R for analysis.
 
-See `Tsept_CophylogeneticSignal_coevo/Tsept_NonReciprocalCoevo_2025.Rmd` for methods of running tests of cophylogenetic signal. This analysis was performed using the mini-package available at [github.com/kbeigel/coevo](https://github.com/kbeigel/coevo)  (v1.0.0).
+See `copyhlogenetic_signal/Tsept_NonReciprocalCoevo_2025.Rmd` for methods of running tests of cophylogenetic signal. This analysis was performed using the mini-package available at [github.com/kbeigel/coevo](https://github.com/kbeigel/coevo)  (v1.0.0).
 
 #### Description:
 
