@@ -212,7 +212,7 @@ ah_fs_links = read.table(paste0('results/tables/', 'antHost_fungusSymbiont', '_c
 
 # We can also look at the ParaFit "fungusHost_antSymbiont" and PACo "antHost_fungusSymbiont"
 # to see what overlaps between these analyses
-res_combo = cbind(fh_as_links[, c(1:6, 9:10)], ah_fs_links[, c(7, 8, 11)])
+res_combo = cbind(fh_as_links[, c(1:6, 9:10)], ah_fs_links[, c(1, 2, 7, 8, 11)])
 plot_cophylo(
     h_phy = fungus,
     s_phy = ants,
@@ -222,6 +222,11 @@ plot_cophylo(
     plot_w = 14,
     palette = c('gold', 'magenta3', 'cyan3')
 )
+
+colnames(res_combo)[1:2] = c("ParaFit_Host", "ParaFit_Symbiont")
+colnames(res_combo)[9:10] = c("PACo_Host", "PACo_Symbiont")
+
+write.table(res_combo, paste0('results/tables/', 'CombinedRes_PACo-AH-FS_ParaFit-FH-AS', '_coevo_global_results.txt'), sep = '\t', quote = FALSE, row.names = FALSE)
 
 # We can also look at the ParaFit "antHost_antSymbiont" and PACo "fungusHost_antSymbiont"
 # to see what overlaps between these analyses
