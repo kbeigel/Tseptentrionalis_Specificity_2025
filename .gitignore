@@ -4,3 +4,6 @@ ascbias.py
 **/output/raxml/RAxML_parsimonyTree.*
 **/output/raxml/RAxML_info.*
 **/output/raxml/RAxML_bootstrap.*
+
+
+.lintr
